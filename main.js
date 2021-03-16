@@ -8,11 +8,17 @@ fetch(RSS_URL)
     const items = data.querySelectorAll("item");
     let html = ``;
     items.forEach(el => {
-      
+      html += `
+        <div class="news">
+        ` + getTitle(el) + `
+        </div>
+      `
     });
     document.body.insertAdjacentHTML("beforeend", html);
     });
     
     
-
+function getTitle(el) {
+  return el.getElementsByTagName("title")[0].innerHTML
+}
 
