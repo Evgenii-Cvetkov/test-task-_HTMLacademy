@@ -4,7 +4,7 @@ let showNewsBtn = document.querySelector('.btn');
     newsCount = document.querySelector('.news__count')
     
 
-const RSS_URL = `https://lenta.ru/rss/news`;
+const RSS_URL = `https://www.sport-express.ru/services/materials/news/se/`;
 
 fetch(RSS_URL)
   .then(response => response.text())
@@ -31,7 +31,7 @@ fetch(RSS_URL)
 function createNewsEntry(rssFeedEntry) {
   return {
     title: rssFeedEntry.getElementsByTagName("title")[0].innerHTML,
-    author: rssFeedEntry.getElementsByTagName("author")[0].innerHTML,
+    category: rssFeedEntry.getElementsByTagName("category")[0].innerHTML,
     date: rssFeedEntry.getElementsByTagName("pubDate")[0].innerHTML,
     link: rssFeedEntry.getElementsByTagName("link")[0].innerHTML,
     isRead: false,
@@ -47,9 +47,9 @@ function createNewsTemplate(news) {
   title.innerHTML = news.title;
   title.classList.add('title')
 
-  let author = document.createElement('div');
-  author.innerHTML = news.author;
-  author.classList.add('author')
+  let category = document.createElement('div');
+  category.innerHTML = news.category;
+  category.classList.add('category')
 
   let date = document.createElement('div');
   date.innerHTML = news.date;
@@ -64,7 +64,7 @@ function createNewsTemplate(news) {
   })
 
   newsTemplate.appendChild(title)
-  newsTemplate.appendChild(author)
+  newsTemplate.appendChild(category)
   newsTemplate.appendChild(date)
   newsTemplate.appendChild(link)
 
