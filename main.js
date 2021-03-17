@@ -70,7 +70,7 @@ function createNewsEntry(rssFeedEntry) {
 
 function createNewsTemplate(news) {
   let newsTemplate = document.createElement('div');
-  newsTemplate.classList.add('news');
+  newsTemplate.classList.add('.news');
   
   let author = document.createElement('div');
   author.innerHTML = news.author;
@@ -98,9 +98,9 @@ function createNewsTemplate(news) {
 
 function toggleNews() {
   let newsSection = document.querySelector('.news')
-  if (news.style.display === "none") {
-      news.style.display = "block";
+  if (newsSection.style.display === "none") {
+    newsSection.style.display = "block";
   } else {
-        news.style.display = "none"
+    newsSection.style.display = "none"
       }
 }
