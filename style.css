@@ -18,6 +18,8 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .news {
+  margin-top: 10px;
+  margin-left: 10px;
   border: 2px #000 solid;
   width: 300px;
   height: auto;
@@ -49,6 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding:11px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #fafafa;
+  position: relative;
 }
 .btn:hover {
 	background:linear-gradient(to bottom, #bab1ba 5%, #ffffff 100%);
@@ -59,4 +62,14 @@ h1, h2, h3, h4, h5, h6 {
 	top:1px;
 }
 
+.news__count {
+  width: 30px;
+  height: 20px;
+  background-color: red;
+  border-radius: 5px;
+  padding-left: 6px;
+  position: absolute;
+  top: 0;
+  left: 170px;
+}
         

@@ -1,5 +1,7 @@
 let showNewsBtn = document.querySelector('.btn');
     newsFeed = new Array();
+    newsSection = document.querySelector('.news');
+    newsCount = document.querySelector('.news__count')
 
 const RSS_URL = `https://lenta.ru/rss/news`;
 
@@ -17,28 +19,11 @@ fetch(RSS_URL)
 
       console.log(newsFeed);
 
-      news.template = createNewsTemplate(news)
+      let template = createNewsTemplate(news)
+      newsSection.appendChild(template)
 
-      
-
-      // news.template += `
-      //     <div class="title">
-      //     ` + getTitle(el) + `
-      //     </div>
-      //     <div class="author">
-      //     ` + getAuthor(el) + `
-      //     </div>
-      //     <div class="date">
-      //     ` + getDate(el) + `
-      //     </div>
-      //     <div class="link">
-
-      //     <a href="`+ getLink(el) +`" target="_blank"> Читать... </a>
-      //     </div>
-      // `
     });
-    // var newsSection = document.getElementById('news')
-    // newsSection.insertAdjacentHTML("afterbegin", news.template);
+    newsCount.innerHTML = items.length
     })
     
     
@@ -53,43 +38,31 @@ function createNewsEntry(rssFeedEntry) {
   }
 }
 
-// function getTitle(el) {
-//   return el.getElementsByTagName("title")[0].innerHTML
-// }
-
-// function getAuthor(el) {
-//   return el.getElementsByTagName("author")[0].innerHTML
-// }
-
-// function getDate(el) {
-//   return el.getElementsByTagName("pubDate")[0].innerHTML
-// }
-// function getLink(el) {
-//   return el.getElementsByTagName("link")[0].innerHTML
-// }
 
 function createNewsTemplate(news) {
   let newsTemplate = document.createElement('div');
-  newsTemplate.classList.add('.news');
+  newsTemplate.classList.add('news__item');
   
-  let author = document.createElement('div');
-  author.innerHTML = news.author;
-  author.classList.add('author')
-
   let title = document.createElement('div');
   title.innerHTML = news.title;
   title.classList.add('title')
 
+  let author = document.createElement('div');
+  author.innerHTML = news.author;
+  author.classList.add('author')
+
   let date = document.createElement('div');
   date.innerHTML = news.date;
-  date.classList.add('title')
+  date.classList.add('date')
 
-  let link = document.createElement('div');
-  link.innerHTML = news.link;
+  let link = document.createElement('a');
+  link.href = `${news.link}`
+  link.innerHTML = news.link
   link.classList.add('link')
+  
 
-  newsTemplate.appendChild(author)
   newsTemplate.appendChild(title)
+  newsTemplate.appendChild(author)
   newsTemplate.appendChild(date)
   newsTemplate.appendChild(link)
 
@@ -97,7 +70,7 @@ function createNewsTemplate(news) {
 }
 
 function toggleNews() {
-  let newsSection = document.querySelector('.news')
+  
   if (newsSection.style.display === "none") {
     newsSection.style.display = "block";
   } else {
