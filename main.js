@@ -2,6 +2,7 @@ let showNewsBtn = document.querySelector('.btn');
     newsFeed = new Array();
     newsSection = document.querySelector('.news');
     newsCount = document.querySelector('.news__count')
+    
 
 const RSS_URL = `https://lenta.ru/rss/news`;
 
@@ -10,14 +11,13 @@ fetch(RSS_URL)
   .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
   .then(data => {
     const items = data.querySelectorAll("item");
-    console.log(items.length);
-    let html = ``;
+    // console.log(items.length);
     items.forEach(el => {
 
       let news = createNewsEntry(el);
       newsFeed.push(news)
 
-      console.log(newsFeed);
+      // console.log(newsFeed);
 
       let template = createNewsTemplate(news)
       newsSection.appendChild(template)
@@ -58,8 +58,10 @@ function createNewsTemplate(news) {
   let link = document.createElement('a');
   link.href = `${news.link}`
   link.innerHTML = news.link
-  link.classList.add('link')
-  
+  link.classList.add('news__link')
+  link.addEventListener(onclick, function() {
+    newsFeed.isRead = true
+  })
 
   newsTemplate.appendChild(title)
   newsTemplate.appendChild(author)
@@ -68,6 +70,7 @@ function createNewsTemplate(news) {
 
   return newsTemplate;
 }
+
 
 function toggleNews() {
   
