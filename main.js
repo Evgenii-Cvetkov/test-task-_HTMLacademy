@@ -1,18 +1,5 @@
-let news = document.querySelector('.news');
 let showNewsBtn = document.querySelector('.btn');
-
-
-function toggleNews() {
-  let news = document.querySelector('.news')
-  if (news.style.display === "none") {
-      news.style.display = "block";
-  } else {
-        news.style.display = "none"
-      }
-}
-
-
-
+    newsFeed = new Array();
 
 const RSS_URL = `https://lenta.ru/rss/news`;
 
@@ -21,41 +8,99 @@ fetch(RSS_URL)
   .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
   .then(data => {
     const items = data.querySelectorAll("item");
+    console.log(items.length);
     let html = ``;
     items.forEach(el => {
-      html += `
-          <div class="title">
-          ` + getTitle(el) + `
-          </div>
-          <div class="author">
-          ` + getAuthor(el) + `
-          </div>
-          <div class="date">
-          ` + getDate(el) + `
-          </div>
-          <div class="link">
 
-          <a href="`+ getLink(el) +`" target="_blank"> Читать... </a>
-          </div>
-      `
+      let news = createNewsEntry(el);
+      newsFeed.push(news)
+
+      console.log(newsFeed);
+
+      news.template = createNewsTemplate(news)
+
+      
+
+      // news.template += `
+      //     <div class="title">
+      //     ` + getTitle(el) + `
+      //     </div>
+      //     <div class="author">
+      //     ` + getAuthor(el) + `
+      //     </div>
+      //     <div class="date">
+      //     ` + getDate(el) + `
+      //     </div>
+      //     <div class="link">
+
+      //     <a href="`+ getLink(el) +`" target="_blank"> Читать... </a>
+      //     </div>
+      // `
     });
-    var news = document.getElementById('news')
-    news.insertAdjacentHTML("afterbegin", html);
-    });
+    // var newsSection = document.getElementById('news')
+    // newsSection.insertAdjacentHTML("afterbegin", news.template);
+    })
     
     
-function getTitle(el) {
-  return el.getElementsByTagName("title")[0].innerHTML
+    
+function createNewsEntry(rssFeedEntry) {
+  return {
+    title: rssFeedEntry.getElementsByTagName("title")[0].innerHTML,
+    author: rssFeedEntry.getElementsByTagName("author")[0].innerHTML,
+    date: rssFeedEntry.getElementsByTagName("pubDate")[0].innerHTML,
+    link: rssFeedEntry.getElementsByTagName("link")[0].innerHTML,
+    isRead: false,
+  }
 }
 
-function getAuthor(el) {
-  return el.getElementsByTagName("author")[0].innerHTML
+// function getTitle(el) {
+//   return el.getElementsByTagName("title")[0].innerHTML
+// }
+
+// function getAuthor(el) {
+//   return el.getElementsByTagName("author")[0].innerHTML
+// }
+
+// function getDate(el) {
+//   return el.getElementsByTagName("pubDate")[0].innerHTML
+// }
+// function getLink(el) {
+//   return el.getElementsByTagName("link")[0].innerHTML
+// }
+
+function createNewsTemplate(news) {
+  let newsTemplate = document.createElement('div');
+  newsTemplate.classList.add('news');
+  
+  let author = document.createElement('div');
+  author.innerHTML = news.author;
+  author.classList.add('author')
+
+  let title = document.createElement('div');
+  title.innerHTML = news.title;
+  title.classList.add('title')
+
+  let date = document.createElement('div');
+  date.innerHTML = news.date;
+  date.classList.add('title')
+
+  let link = document.createElement('div');
+  link.innerHTML = news.link;
+  link.classList.add('link')
+
+  newsTemplate.appendChild(author)
+  newsTemplate.appendChild(title)
+  newsTemplate.appendChild(date)
+  newsTemplate.appendChild(link)
+
+  return newsTemplate;
 }
 
-function getDate(el) {
-  return el.getElementsByTagName("pubDate")[0].innerHTML
+function toggleNews() {
+  let newsSection = document.querySelector('.news')
+  if (news.style.display === "none") {
+      news.style.display = "block";
+  } else {
+        news.style.display = "none"
+      }
 }
-function getLink(el) {
-  return el.getElementsByTagName("link")[0].innerHTML
-}
-
