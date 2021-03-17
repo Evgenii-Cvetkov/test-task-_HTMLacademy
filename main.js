@@ -59,8 +59,11 @@ function createNewsTemplate(news) {
   link.href = `${news.link}`
   link.innerHTML = news.link
   link.classList.add('news__link')
-  link.addEventListener(onclick, function() {
-    newsFeed.isRead = true
+  link.setAttribute('target', '_blank')
+  link.addEventListener("click", function() {
+    news.isRead = true;
+    newsTemplate.style.opacity = 0.5
+    recalculateCounter();
   })
 
   newsTemplate.appendChild(title)
@@ -69,6 +72,16 @@ function createNewsTemplate(news) {
   newsTemplate.appendChild(link)
 
   return newsTemplate;
+}
+
+function recalculateCounter() {
+  var unreadNews = 0;
+  newsFeed.forEach(news => {
+    if(!news.isRead)
+        unreadNews++;
+  }); 
+
+  newsCount.innerHTML = unreadNews;
 }
 
 
